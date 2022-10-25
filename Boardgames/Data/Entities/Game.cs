@@ -1,4 +1,7 @@
-﻿namespace Boardgames.Data.Entities
+﻿using Boardgames.Data.Dtos.Auth;
+using System.ComponentModel.DataAnnotations;
+
+namespace Boardgames.Data.Entities
 {
     public class Game
     {

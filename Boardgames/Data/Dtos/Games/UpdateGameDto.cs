@@ -2,5 +2,5 @@
 
 namespace Boardgames.Data.Dtos.Games
 {
-    public record UpdateGameDto([Required]string Name);
+    public record UpdateGameDto([Required]string Name, string Description);
 }

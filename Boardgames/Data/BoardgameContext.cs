@@ -1,9 +1,11 @@
-﻿using Boardgames.Data.Entities;
+﻿using Boardgames.Data.Dtos.Auth;
+using Boardgames.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boardgames.Data
 {
-    public class BoardgameContext : DbContext
+    public class BoardgameContext : IdentityDbContext<BoardgamesUser>
     {
         public DbSet<Game> Games { get; set; }
         public DbSet<Ad> Ads { get; set; }

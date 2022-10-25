@@ -3,6 +3,7 @@ using Boardgames.Data.Entities;
 using Boardgames.Data.Dtos.Games;
 using Boardgames.Data.Dtos.Ads;
 using Boardgames.Data.Dtos.Questions;
+using Boardgames.Data.Dtos.Auth;
 
 namespace Boardgames.Data
 {
@@ -22,6 +23,7 @@ namespace Boardgames.Data
             CreateMap<CreateQuestionDto, Question>();
             CreateMap<UpdateQuestionDto, Question>();
 
+            CreateMap<BoardgamesUser, UserDto>();
         }
     }
 }

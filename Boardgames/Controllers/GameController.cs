@@ -3,6 +3,8 @@ using Boardgames.Data.Repositories;
 using Boardgames.Data.Entities;
 using Boardgames.Data.Dtos.Games;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Boardgames.Auth.Model;
 
 namespace Boardgames.Controllers
 {
@@ -12,11 +14,13 @@ namespace Boardgames.Controllers
     {
         private readonly IGameRepository _gameRepository;
         private readonly IMapper _mapper;
+        private readonly IAuthorizationService _authorizationService;
 
-        public GameController(IGameRepository gameRepository, IMapper mapper)
+        public GameController(IGameRepository gameRepository, IMapper mapper, IAuthorizationService authorizationService)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -36,6 +40,7 @@ namespace Boardgames.Controllers
         }   
 
         [HttpPost]
+        [Authorize(Roles = BoardgamesUserRoles.Admin)]
         public async Task<ActionResult<GameDto>> PostAsync(CreateGameDto gameDto)
         {
             var game = _mapper.Map<Game>(gameDto);
@@ -46,6 +51,7 @@ namespace Boardgames.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = BoardgamesUserRoles.Admin)]
         public async Task<ActionResult<GameDto>> PutAsync(int id, UpdateGameDto gameDto)
         {
             var oldGame = await _gameRepository.GetAsync(id);
@@ -59,6 +65,7 @@ namespace Boardgames.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = BoardgamesUserRoles.Admin)]
         public async Task<ActionResult<GameDto>> DeleteAsync(int id)
         {
             var game = await _gameRepository.GetAsync(id);

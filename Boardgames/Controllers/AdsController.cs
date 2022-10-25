@@ -3,6 +3,9 @@ using Boardgames.Data.Repositories;
 using Boardgames.Data.Entities;
 using Boardgames.Data.Dtos.Ads;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Boardgames.Auth.Model;
+using System.Security.Claims;
 
 namespace Boardgames.Controllers
 {
@@ -13,12 +16,14 @@ namespace Boardgames.Controllers
         private readonly IAdsRepository _adsRepository;
         private readonly IMapper _mapper;
         private readonly IGameRepository _gameRepository;
+        private readonly IAuthorizationService _authorizationService;
 
-        public AdsController(IAdsRepository adsRepository, IMapper mapper, IGameRepository gameRepository)
+        public AdsController(IAdsRepository adsRepository, IMapper mapper, IGameRepository gameRepository, IAuthorizationService authorizationService)
         {
             _adsRepository = adsRepository;
             _mapper = mapper;
             _gameRepository = gameRepository;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -38,6 +43,7 @@ namespace Boardgames.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = BoardgamesUserRoles.SimpleUser)]
         public async Task<ActionResult<AdDto>> PostAsync(int gameId, CreateAdDto adDto)
         {
             var game = await _gameRepository.GetAsync(gameId);
@@ -45,6 +51,7 @@ namespace Boardgames.Controllers
 
             var ad = _mapper.Map<Ad>(adDto);
             ad.GameId = gameId;
+            ad.UserId = User.FindFirstValue(CustomClaims.UserId);
 
             await _adsRepository.InsertAsync(ad);
 
@@ -52,6 +59,7 @@ namespace Boardgames.Controllers
         }
 
         [HttpPut("{adId}")]
+        [Authorize(Roles = BoardgamesUserRoles.SimpleUser)]
         public async Task<ActionResult<AdDto>> PutAsync(int gameId, int adId, UpdateAdDto adDto)
         {
             var game = await _gameRepository.GetAsync(gameId);
@@ -59,6 +67,12 @@ namespace Boardgames.Controllers
 
             var oldAd = await _adsRepository.GetAsync(gameId, adId);
             if (oldAd == null) return NotFound($"Couldn't find an ad with id of '{adId}'.");
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, oldAd, PolicyNames.SameUser);
+            if(!authorizationResult.Succeeded)
+            {
+                return Forbid();//403
+            }
 
             _mapper.Map(adDto, oldAd);
 
@@ -68,11 +82,19 @@ namespace Boardgames.Controllers
         }
 
         [HttpDelete("{adId}")]
+        [Authorize(Roles = BoardgamesUserRoles.SimpleUser)]
         public async Task<ActionResult> DeleteAsync(int gameId, int adId)
         {
 
             var ad = await _adsRepository.GetAsync(gameId, adId);
             if (ad == null) return NotFound($"Ad with id of '{adId}' not found.");
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, ad, PolicyNames.SameUser);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();//403
+            }
+
             await _adsRepository.DeleteAsync(ad);
 
             //204

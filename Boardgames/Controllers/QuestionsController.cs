@@ -3,6 +3,9 @@ using Boardgames.Data.Repositories;
 using Boardgames.Data.Entities;
 using Boardgames.Data.Dtos.Questions;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Boardgames.Auth.Model;
+using System.Security.Claims;
 
 namespace Boardgames.Controllers
 {
@@ -14,13 +17,15 @@ namespace Boardgames.Controllers
         private readonly IMapper _mapper;
         private readonly IGameRepository _gameRepository;
         private readonly IQuestionsRepository _questionsRepository;
+        private readonly IAuthorizationService _authorizationService;
 
-        public QuestionsController(IAdsRepository adsRepository, IMapper mapper, IGameRepository gameRepository, IQuestionsRepository questionsRepository)
+        public QuestionsController(IAdsRepository adsRepository, IMapper mapper, IGameRepository gameRepository, IQuestionsRepository questionsRepository, IAuthorizationService authorizationService)
         {
             _adsRepository = adsRepository;
             _mapper = mapper;
             _gameRepository = gameRepository;
             _questionsRepository = questionsRepository;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -40,6 +45,7 @@ namespace Boardgames.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = BoardgamesUserRoles.SimpleUser)]
         public async Task<ActionResult<QuestionDto>> PostAsync(int gameId, int adId, CreateQuestionDto questionDto)
         {
             var game = await _gameRepository.GetAsync(gameId);
@@ -50,6 +56,7 @@ namespace Boardgames.Controllers
 
             var question = _mapper.Map<Question>(questionDto);
             question.AdId = adId;
+            question.UserId = User.FindFirstValue(CustomClaims.UserId);
 
             await _questionsRepository.InsertAsync(question);
 
@@ -57,6 +64,7 @@ namespace Boardgames.Controllers
         }
 
         [HttpPut("{questionId}")]
+        [Authorize(Roles = BoardgamesUserRoles.SimpleUser)]
         public async Task<ActionResult<QuestionDto>> PutAsync(int gameId, int adId, int questionId, UpdateQuestionDto questionDto)
         {
             var game = await _gameRepository.GetAsync(gameId);
@@ -68,6 +76,12 @@ namespace Boardgames.Controllers
             var oldQuestion = await _questionsRepository.GetAsync(adId, questionId);
             if (oldQuestion == null) return NotFound($"Couldn't find a question with id of '{questionId}'.");
 
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, oldQuestion, PolicyNames.SameUser);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();//403
+            }
+
             _mapper.Map(questionDto, oldQuestion);
 
             await _questionsRepository.UpdateAsync(oldQuestion);
@@ -76,11 +90,19 @@ namespace Boardgames.Controllers
         }
 
         [HttpDelete("{questionId}")]
+        [Authorize(Roles = BoardgamesUserRoles.SimpleUser)]
         public async Task<ActionResult> DeleteAsync(int adId, int questionId)
         {
 
             var question = await _questionsRepository.GetAsync(adId, questionId);
             if (question == null) return NotFound($"Question with id of '{questionId}' not found.");
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, question, PolicyNames.SameUser);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();//403
+            }
+
             await _questionsRepository.DeleteAsync(question);
 
             //204
