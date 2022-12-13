@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANdIkvxs8+0qE3HKkl2Lf9QAAAAACAAAAAAAQZgAAAAEAACAAAAA0kSwurFWD00UcXCYi5i3i5+s/7TXPOSUXOlK7cIWiCgAAAAAOgAAAAAIAACAAAAD1Ht77izJ5IsYClV//KSq1KA1/h+OyiaUuXp2s98+KRoAAAADuDy+WIp3geuZdYsL8lgqlZYAcYBjUV+Xg8hjC19Z/EmoD5YhXU2ZdcH8QG/bohUPcq5nhWSQUJS5+xm2fZ7TLIupxzdRDF0YbMFTU+vob97O3FVL0g3BJvtN5hhg16I6TypxG/lftrRWMFdioRXZI/EJpaG758+Igf3QLwctf2EAAAACWQP0l18Hwib6kWDHwuHFawlCMC0wFs3DJ/e/vJwJYgBBaY3nAq9c2i9+j97gg5bGypiUlKzmTezvVZqDxuJux</EncryptedPassword>
+    <History>True|2022-12-13T19:55:44.4445218Z;True|2022-12-13T21:53:44.9995530+02:00;True|2022-12-13T21:48:10.2117284+02:00;True|2022-12-13T18:23:57.9438981+02:00;True|2022-12-13T18:22:15.9302631+02:00;True|2022-12-13T17:20:38.8301235+02:00;False|2022-12-13T17:18:20.9607669+02:00;True|2022-12-08T14:12:55.9493953+02:00;True|2022-12-08T13:32:50.3361526+02:00;True|2022-12-08T13:23:35.4822877+02:00;True|2022-12-08T13:02:03.2826472+02:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DBConnection">
+      <Value>Data Source=tcp:boardgames2dbserver.database.windows.net,1433%3bInitial Catalog=Boardgames_db2%3bUser Id=matsus%40boardgames2dbserver%3bPassword=root.123</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="Boardgames.Data.BoardgameContext">
+      <Value>Data Source=tcp:boardgamesdbserver.database.windows.net,1433%3bInitial Catalog=Boardgames_db%3bUser Id=matsus%40boardgamesdbserver%3bPassword=m.86717963</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANdIkvxs8+0qE3HKkl2Lf9QAAAAACAAAAAAAQZgAAAAEAACAAAADQk4glR4DT/G+Fay6oWs6QApDQr2dMIYK2qs26N/+mBgAAAAAOgAAAAAIAACAAAADrpTdIa+xLwgx/E4Sr/0zKikoxoK/5AO88tzwEX/h3pYAAAAA2uTKUXngFLrhSMwrvPSv09QM5I73g38wWv8Jgj2GzHuTloh23M1B9uc8Oh9TBcbjXFJF5RqWqju/K34wJNFJTwWNTGGKbh0HBykixahR15RAc7d+spydkeAWN8enrKOcmFbSkks14ngFzF7RGCWS90wVVPow9ePSW8p5aY4ZMM0AAAAChLPcYF5IOMv2Sxe2NY7088cU8QP/BTgVBE8JheRw8s4pBQZv2tx4s4MRL8Djz/KFqnA7dXwQpeOGv7olzqhWS</EncryptedPassword>
+    <History>True|2022-12-13T20:54:38.2231040Z;True|2022-12-13T22:50:04.2737367+02:00;True|2022-12-13T22:35:01.8423919+02:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="Boardgames.Data.BoardgameContext">
+      <Value>Data Source=tcp:boardgamesdbserver.database.windows.net,1433%3bInitial Catalog=Boardgames_db%3bUser Id=matsus%40boardgamesdbserver%3bPassword=root.123</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

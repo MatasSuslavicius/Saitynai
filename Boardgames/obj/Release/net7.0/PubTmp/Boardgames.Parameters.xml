@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="BoardgamesAPI1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\University\\Saitynai\\Saitynai\\Boardgames\\obj\\Release\\net7\.0\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="Boardgames.Data.BoardgameContext" description="" value="Data Source=tcp:boardgamesdbserver.database.windows.net,1433;Initial Catalog=Boardgames_db;User Id=matsus@boardgamesdbserver;Password=root.123" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^D:\\University\\Saitynai\\Saitynai\\Boardgames\\obj\\Release\\net7\.0\\PubTmp\\EFSQLScripts\\Boardgames\.Data\.BoardgameContext\.sql$" />
+  </parameter>
+</parameters>
