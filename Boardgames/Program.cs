@@ -46,6 +46,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalHost", policy =>
+    {
+        policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithOrigins("http://localhost:3000");
+    });
+});
 
 var app = builder.Build();
 
@@ -55,6 +65,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowLocalHost");
 
 app.UseRouting(); //
 
