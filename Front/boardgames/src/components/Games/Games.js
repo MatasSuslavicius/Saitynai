@@ -38,32 +38,50 @@ export default function Games() {
             getData();
         })
     }
-
+    const styles = {
+        table: {
+          borderCollapse: "collapse",
+          marginLeft: "10vh",
+          marginRight: "10vh",
+        },
+        th: {
+          border: "1px solid #333",
+          padding: 8,
+          fontWeight: "bold",
+          textAlign: "left",
+          backgroundColor: "rgba(0,0,0,0.1)",
+        },
+        td: {
+          border: "1px solid #333",
+          padding: 8,
+        },
+      };
     return (
-        <div>
-            <Table celled>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell>ID</Table.HeaderCell>
-                        <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>Description</Table.HeaderCell>
-                        <Table.HeaderCell>Ads</Table.HeaderCell>
+        <section2>
+            <h1>Games</h1>
+            <br></br>
+            <Table celled style={styles.table}>
+            
+                <Table.Header style={styles.th}>
+                    <Table.Row style={styles.th}>
+                        <Table.HeaderCell style={styles.th}>Name</Table.HeaderCell>
+                        <Table.HeaderCell style={styles.th}>Description</Table.HeaderCell>
+                        <Table.HeaderCell style={styles.th}>Ads</Table.HeaderCell>
                         {auth?.roles?.find(role => allowedRoles?.includes(role)) && 
-                        (<Table.HeaderCell>Edit</Table.HeaderCell>)}
+                        (<Table.HeaderCell style={styles.th}>Edit</Table.HeaderCell>)}
                         {auth?.roles?.find(role => allowedRoles?.includes(role)) && 
-                        (<Table.HeaderCell>Delete</Table.HeaderCell>)}
+                        (<Table.HeaderCell style={styles.th}>Delete</Table.HeaderCell>)}
             
                     </Table.Row>
                 </Table.Header>
 
-                <Table.Body>
+                <Table.Body style={styles.td}>
                     {gamesData.map((data) => {
                         return (
-                            <Table.Row>
-                                <Table.Cell>{data.id}</Table.Cell>
-                                <Table.Cell>{data.name}</Table.Cell>
-                                <Table.Cell>{data.description}</Table.Cell>
-                                <Table.Cell>
+                            <Table.Row style={styles.td}>
+                                <Table.Cell style={styles.td}>{data.name}</Table.Cell>
+                                <Table.Cell style={styles.td}>{data.description}</Table.Cell>
+                                <Table.Cell style={styles.td}>
                                     <Link to='/ads'>
                                         <Button
                                             color="green"
@@ -73,8 +91,8 @@ export default function Games() {
                                     </Link>
                                 </Table.Cell>
                                 {auth?.roles?.find(role => allowedRoles?.includes(role)) && 
-                                (<Table.Cell>
-                                    <Link to='edit'>
+                                (<Table.Cell style={styles.td}>
+                                    <Link to='/games/edit'>
                                         <Button
                                             color="green"
                                             onClick={() => setData(data.id, data.name, data.description)}>
@@ -83,7 +101,7 @@ export default function Games() {
                                     </Link>
                                 </Table.Cell>)}
                                 {auth?.roles?.find(role => allowedRoles?.includes(role)) && 
-                                (<Table.Cell>
+                                (<Table.Cell style={styles.td}>
                                     <Button color="red" onClick={() => onDelete(data.id)}>Delete</Button>
                                 </Table.Cell>)}
                             </Table.Row>
@@ -92,14 +110,15 @@ export default function Games() {
 
                 </Table.Body>
             </Table>
+            <br></br>
             {auth?.roles?.find(role => allowedRoles?.includes(role)) 
             && 
-            (<Link to='add'>
+            (<Link to='/games/add'>
                 <Button
                     color="blue">
                     Add game
                 </Button>
             </Link>)}
-        </div>
+        </section2>
     )
 }

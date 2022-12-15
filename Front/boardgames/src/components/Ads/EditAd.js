@@ -31,19 +31,29 @@ export default function EditAd() {
     }, [])
 
     return (
-        <div>
+        <section>
+            <h1>Edit Ad</h1>
+            <br></br>
             <Form>
                 <Form.Field>
                     <label>Your Name</label>
+                    <br></br>
                     <input name="fname"
+                        type="text"
+                        autoComplete="off"
+                        required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder='Your Name' />
                 </Form.Field>
                 <Form.Field>
                     <label>Description</label>
+                    <br></br>
                     <input
                         name="lname"
+                        type="text"
+                        autoComplete="off"
+                        required
                         value={description}
                         placeholder='Description'
                         onChange={(e) => setDescription(e.target.value)}
@@ -51,7 +61,10 @@ export default function EditAd() {
                 </Form.Field>
                 <Form.Field>
                     <label>Price</label>
+                    <br></br>
                     <input type="number"
+                        autoComplete="off"
+                        required
                         name="fprice"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -59,8 +72,12 @@ export default function EditAd() {
                 </Form.Field>
                 <Form.Field>
                     <label>Phone</label>
+                    <br></br>
                     <input
                         name="lphone"
+                        type="text"
+                        autoComplete="off"
+                        required
                         value={phone}
                         placeholder='Phone'
                         onChange={(e) => setPhone(e.target.value)}
@@ -74,6 +91,6 @@ export default function EditAd() {
                     </Button>
                 </Link>
             </Form>
-        </div>
+        </section>
     )
 }

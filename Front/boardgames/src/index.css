@@ -1,3 +1,4 @@
+/*
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 * {
@@ -28,7 +29,19 @@ body {
 
 section {
     width: 100%;
-    max-width: 420px;
+    height: 100%;
+    max-width: 400px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.4);
+}
+section2 {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
     min-height: 400px;
     display: flex;
     flex-direction: column;
@@ -51,6 +64,7 @@ a, a:visited {
 
 input[type="text"],
 input[type="password"],
+input[type="number"],
 button,
 textarea {
   font-family: 'Nunito', sans-serif;
@@ -111,4 +125,111 @@ button {
 
 .line {
     display: inline-block;
+}
+*/
+span{
+    font-size: 1.7em;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    min-height: 78vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: rgba(0,0,0,0.2);
+}
+section2 {
+    width: 100%;
+    height: 100%;
+    min-height: 78vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: rgba(0,0,0,0.2);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+
+html {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    
+}
+input[type="text"],
+input[type="password"],
+input[type="number"],
+button,
+textarea {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  padding: 0.1rem;
+  border-radius: 0.4rem;
+}
+label{
+    font-size: 18px;
+}
+
+button {
+  padding: 0.2rem;
+}
+button:hover {
+    background-color: rgba(0,0,0,0.1);
+  }
+
+.instructions {
+    font-size: 0.6rem;
+    border-radius: 0.3rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+h1 {
+    font-size: 22px;
+}
+
+tablecss {
+    border:2px solid black;
+    background-color: #fafafa;
 }

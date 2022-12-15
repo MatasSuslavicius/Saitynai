@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 
 const Missing = () => {
     return (
+        <section>
         <article style={{ padding: "100px" }}>
             <h1>Oops!</h1>
             <p>Page Not Found</p>
@@ -9,6 +10,7 @@ const Missing = () => {
                 <Link to="/">Visit Our Homepage</Link>
             </div>
         </article>
+        </section>
     )
 }
 

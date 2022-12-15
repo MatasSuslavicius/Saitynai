@@ -2,13 +2,13 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate} from 'react-router-dom';
 import decode from 'jwt-decode';
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-//import axios from '../api/axios';
+//import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import axios from '../api/axios';
 const LOGIN_URL = '/login';
 
 const Login = () => {
     const { setAuth } = useAuth();
-    const axiosPrivate = useAxiosPrivate();
+    //const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
 
     const userRef = useRef();
@@ -30,11 +30,11 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axiosPrivate.post(LOGIN_URL,
+            const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ userName: user, password: pwd }),
                 {
-                    //headers: { 'Content-Type': 'application/json' },
-                    //withCredentials: true
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
                 }
             );
             console.log(JSON.stringify(response?.data));
@@ -52,7 +52,7 @@ const Login = () => {
             }
             setUser('');
             setPwd('');
-            navigate("/linkpage");
+            navigate("/");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -69,9 +69,11 @@ const Login = () => {
         
         <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            <br></br>
             <h1>Sign In</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:</label>
+                <br></br>
                 <input
                     type="text"
                     id="username"
@@ -81,8 +83,9 @@ const Login = () => {
                     value={user}
                     required
                 />
-
+                <br></br>
                 <label htmlFor="password">Password:</label>
+                <br></br>
                 <input
                     type="password"
                     id="password"
@@ -90,7 +93,11 @@ const Login = () => {
                     value={pwd}
                     required
                 />
+                <br></br>
+                <br></br>
                 <button>Sign In</button>
+                <br></br>
+                <br></br>
             </form>
             <p>
                 Need an Account?<br />

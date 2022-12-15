@@ -4,52 +4,48 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { Link ,useNavigate} from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
 
-export default function AdDetailed() {
+export default function QuestionDetailed() {
     const { auth } = useAuth();
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
-    const [adData, setAdData] = useState([]);
+    const [questionData, setQuestionData] = useState([]);
     const [gameID, setGameID] = useState(null);
     const [adID, setAdID] = useState(null);
+    const [questionID, setQuestionID] = useState(null);
     const [gameName, setGameName] = useState('');
+    const [author, setAuthor] = useState('');
+    const [body, setBody] = useState('');
     const allowedRoles = (["Admin", ""])
     useEffect(() => {
         setGameID(localStorage.getItem('ID'))
         setGameName(localStorage.getItem('name'))
         setAdID(localStorage.getItem('adID'))
-        axiosPrivate.get('/games/' + `${localStorage.getItem('ID')}` +'/ads/' + `${localStorage.getItem('adID')}`)
+        setQuestionID(localStorage.getItem('questionID'))
+        setAuthor(localStorage.getItem('questionAuthor'))
+        setBody(localStorage.getItem('questionBody'))
+        axiosPrivate.get('/games/' + `${localStorage.getItem('ID')}` +'/ads/' + `${localStorage.getItem('adID')}`+'/questions/' + `${localStorage.getItem('questionID')}`)
             .then((getData) => {
-                setAdData(getData.data);
+                setQuestionData(getData.data);
             })
     }, [])
     
-    const setData = (adData) => {
-        localStorage.setItem('adID', adData.id)
-        localStorage.setItem('adName', adData.name)
-        localStorage.setItem('adDescription', adData.description)
-        localStorage.setItem('adPrice', adData.price)
-        localStorage.setItem('adPhone', adData.phone)
-    }
-
-    const getData = () => {
-        axiosPrivate.get('/games/' + `${localStorage.getItem('ID')}` +'/ads/' + `${localStorage.getItem('adID')}`)
-            .then((getData) => {
-                console.log(getData.data);
-                setAdData(getData.data);
-            })
-    }
-
     const onDelete = (id) => {
-        axiosPrivate.delete('/games/' + `${localStorage.getItem('ID')}` +'/ads/'+`${localStorage.getItem('adID')}`)
+        axiosPrivate.delete('/games/' + `${localStorage.getItem('ID')}` +'/ads/'+`${localStorage.getItem('adID')}` + '/questions/'+`${localStorage.getItem('questionID')}`)
         .then(() => {
-            navigate('/ads');
+            navigate('/questions');
         })
+    }
+    const setData = (questionData) => {
+        localStorage.setItem('questionID', questionData.id)
+        localStorage.setItem('questionAuthor', questionData.author)
+        localStorage.setItem('questionBody', questionData.body)
     }
     const styles = {
         table: {
           borderCollapse: "collapse",
           marginLeft: "10vh",
           marginRight: "10vh",
+          alignSelf: "center",
         },
         th: {
           border: "1px solid #333",
@@ -62,52 +58,39 @@ export default function AdDetailed() {
           border: "1px solid #333",
           padding: 8,
           width: "150px"
-        }
+        },
       };
     return (
         <section2>
-            <h1> {gameName} Ad details</h1>
+            <h1> Details</h1>
             <br></br>
             <Table celled style={styles.table}>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell style={styles.th}>ID</Table.HeaderCell>
-                        <Table.HeaderCell style={styles.th}>Name</Table.HeaderCell>
-                        <Table.HeaderCell style={styles.th}>Description</Table.HeaderCell>
-                        <Table.HeaderCell style={styles.th}>Price</Table.HeaderCell>
-                        <Table.HeaderCell style={styles.th}>Phone</Table.HeaderCell>
+                        <Table.HeaderCell style={styles.th}>Author</Table.HeaderCell>
+                        <Table.HeaderCell style={styles.th}>Question</Table.HeaderCell>
             
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
                             <Table.Row>
-                                <Table.Cell style={styles.td}>{adData.id}</Table.Cell>
-                                <Table.Cell style={styles.td}>{adData.name}</Table.Cell>
-                                <Table.Cell style={styles.td}>{adData.description}</Table.Cell>
-                                <Table.Cell style={styles.td}>{adData.price}</Table.Cell>
-                                <Table.Cell style={styles.td}>{adData.phone}</Table.Cell>
+                                <Table.Cell style={styles.td}>{questionData.id}</Table.Cell>
+                                <Table.Cell style={styles.td}>{questionData.author}</Table.Cell>
+                                <Table.Cell style={styles.td}>{questionData.body}</Table.Cell>
                                 
                                 
                             </Table.Row>
 
                 </Table.Body>
                 <Table.Row>
-                        <Table.Cell>
-                            <Link to='/questions'>
-                                <Button
-                                    color="green"
-                                    onClick={() => setData(adData)}>
-                                    Questions
-                                </Button>
-                            </Link>
-                        </Table.Cell>
                     {auth?.roles?.find(role => allowedRoles?.includes(role)) && 
                         (<Table.Cell>
-                            <Link to='/ads/edit'>
+                            <Link to='/questions/edit'>
                                 <Button
                                     color="green"
-                                    onClick={() => setData(adData)}>
+                                    onClick={() => setData(questionData)}>
                                     Edit
                                 </Button>
                             </Link>
@@ -121,7 +104,7 @@ export default function AdDetailed() {
                 </Table.Body>
             </Table>
             <br></br>
-            <Link to={'/ads'}>
+            <Link to={'/questions'}>
                 <Button
                     color="blue">
                     Back

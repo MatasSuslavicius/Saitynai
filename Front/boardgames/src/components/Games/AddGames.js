@@ -17,34 +17,43 @@ export default function AddGames() {
         name,
         description
     }).then(() => {
-        navigate("/games");
+        navigate("/");
     })
   }
   return (
-    <div>
+    <section>
+      <h1>Add Game</h1>
+      <br></br>
       <Form>
         <Form.Field>
           <label>Game Name</label>
+          <br></br>
           <input name="fname" 
+          type="text"
+          autoComplete="off"
+          required
           onChange={(e) => setName(e.target.value)} 
           placeholder='Game Name' />
         </Form.Field>
         <Form.Field>
           <label>Description</label>
+          <br></br>
           <input 
           name="lname" 
+          type="text"
+          autoComplete="off"
           placeholder='Description' 
           onChange={(e) => setDescription(e.target.value)} 
           />
         </Form.Field>
         <Button type='submit' onClick={sendDataToAPI}>Add</Button>
-        <Link to='/games'>
+        <Link to='/'>
             <Button
                 color="green">
                 Back
             </Button>
         </Link>
       </Form>
-    </div>
+    </section>
   )
 }
